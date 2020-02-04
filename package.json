@@ -1,0 +1,48 @@
+{
+  "name": "fob-2019-refresh",
+  "version": "1.0.0",
+  "description": "WordPress seed theme for the development of Fueled on Bacon projects (Q1 2019)",
+  "main": "index.js",
+  "scripts": {
+    "gulp": "gulp",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fueledonbacon/fob-refresh-2019.git"
+  },
+  "author": "Fueled on Bacon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fueledonbacon/fob-refresh-2019/issues"
+  },
+  "homepage": "https://github.com/fueledonbacon/fob-refresh-2019#readme",
+  "devDependencies": {
+    "@babel/core": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
+    "@types/jquery": "^3.3.29",
+    "autoprefixer": "^9.4.10",
+    "babel-loader": "^8.0.5",
+    "browser-sync": "^2.26.3",
+    "del": "^4.0.0",
+    "gulp": "^4.0.0",
+    "gulp-babel": "^8.0.0",
+    "gulp-cssnano": "^2.1.3",
+    "gulp-group-css-media-queries": "^1.2.2",
+    "gulp-header": "^2.0.7",
+    "gulp-jshint": "^2.1.0",
+    "gulp-postcss": "^8.0.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-sourcemaps": "^2.6.5",
+    "gulp-uglify": "^3.0.2",
+    "jshint": "^2.10.1",
+    "node-sass": "^4.11.0",
+    "source-map-loader": "^0.2.4",
+    "ts-loader": "^5.3.3",
+    "typescript": "^3.3.3333",
+    "webpack": "^4.29.6"
+  },
+  "dependencies": {
+    "hamburgers": "^1.1.3"
+  }
+}

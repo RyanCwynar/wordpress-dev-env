@@ -1,0 +1,54 @@
+version: '2'
+services:
+  wordpress:
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile
+    image: fobwordpress
+    ports:
+      - 3000:80
+      - 3443:443
+    volumes:
+      - ./docker-compose-config/php.conf.uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+      - ./:/var/www/html # Full wordpress project
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: user
+      WORDPRESS_DB_PASSWORD: password
+    depends_on:
+      - db
+    networks:
+      - wordpress-network
+  db:
+    image: mysql:latest # https://hub.docker.com/_/mysql/ - or mariadb https://hub.docker.com/_/mariadb
+    ports:
+      - 127.0.0.1:3306:3306 # change ip if required
+    command: [
+        '--default_authentication_plugin=mysql_native_password',
+        '--character-set-server=utf8mb4',
+        '--collation-server=utf8mb4_unicode_ci'
+    ]
+    volumes:
+      - ./wp-database:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    networks:
+      - wordpress-network
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      - PMA_ARBITRARY=1
+      - TESTSUITE_PASSWORD=somewordpress
+    depends_on:
+      - db
+    ports:
+      - 8080:80
+    networks:
+      - wordpress-network
+networks:
+  wordpress-network:
+      driver: bridge
