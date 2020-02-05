@@ -4,20 +4,13 @@
 
 # MAINTAINER Fueled on Bacon
 
-FROM wordpress:latest
+FROM visiblevc/wordpress
 
-COPY .docker/keys/domain.crt /etc/apache2/ssl/apache.crt
-COPY .docker/keys/domain.key /etc/apache2/ssl/apache.key
-COPY .docker/000-default.conf /etc/apache2/sites-enabled
+COPY keys/domain.crt /etc/apache2/ssl/apache.crt
+COPY keys/domain.key /etc/apache2/ssl/apache.key
+COPY 000-default.conf /etc/apache2/sites-enabled
 #RUN apt-get -y update && apt-get upgrade -y
 # Install tools && libraries
-RUN apt-get -y install \
-   # --fix-missing apt-utils nano wget dialog \
-   # build-essential git curl libcurl3 libcurl3-dev zip \
-   # libmcrypt-dev libsqlite3-dev libsqlite3-0 mysql-client \
-   # zlib1g-dev libicu-dev libfreetype6-dev libjpeg62-turbo-dev libpng-dev \
-    libjpeg62-turbo-dev libpng-dev \
-    && rm -rf /var/lib/apt/lists/*
 
 RUN docker-php-ext-install gd mysqli opcache \
 && pecl install xdebug \
