@@ -10,8 +10,8 @@ const gulp = require('gulp');
 const groupmq = require('gulp-group-css-media-queries');
 const jshint = require('gulp-jshint');
 const postcss = require('gulp-postcss');
-const sass = require('gulp-sass');
-sass.compiler = require('node-sass'); // define sass compiler
+// const sass = require('gulp-sass');
+//sass.compiler = require('sass'); // define sass compiler
 const srcmaps = require('gulp-sourcemaps');
 const uglify = require('gulp-uglify');
 const { runWebpack } = require('./webpack-script.js');
@@ -56,19 +56,19 @@ function browserSyncReload(done) {
 //---------------------//
 // process .scss files //
 //---------------------//
-function compileSass() {
-  return gulp
-    .src(SASS_SOURCE_FOLDER) // source folder
-    .pipe(srcmaps.init()) // source map before checkpoint
-    .pipe(sass())
-    .on('error', sass.logError)
-    .pipe(postcss([autoprefixer({ cascade: false })]))
-    .pipe(groupmq()) // group media queries!
-    .pipe(cssnano()) // minify css
-    .pipe(srcmaps.write('.')) // source map after checkpoint
-    .pipe(gulp.dest(CSS_DEST_FOLDER)) // css destination folder
-    .pipe(browsersync.stream()); // stream to browsersync
-}
+  // function compileSass() {
+  //   return gulp
+  //     .src(SASS_SOURCE_FOLDER) // source folder
+  //     .pipe(srcmaps.init()) // source map before checkpoint
+  //     .pipe(sass())
+  //     .on('error', sass.logError)
+  //     .pipe(postcss([autoprefixer({ cascade: false })]))
+  //     .pipe(groupmq()) // group media queries!
+  //     .pipe(cssnano()) // minify css
+  //     .pipe(srcmaps.write('.')) // source map after checkpoint
+  //     .pipe(gulp.dest(CSS_DEST_FOLDER)) // css destination folder
+  //     .pipe(browsersync.stream()); // stream to browsersync
+  // }
 //-------------------//
 // process .js files //
 //-------------------//
@@ -91,7 +91,7 @@ function compileJS() {
 function getHamburgers() {
   return gulp
     .src('./node_modules/hamburgers/_sass/hamburgers/**/*')
-    .pipe(gulp.dest('./wp-content/themes/fueled-on-bacon/lib/hamburgers'));
+    .pipe(gulp.dest('./wordpress/wp-content/themes/fueled-on-bacon/lib/hamburgers'));
 }
 // slick carousel
 // adding more? include in getDependencies below also!
@@ -106,18 +106,18 @@ const getDependencies = gulp.parallel(
 function deleteCompiledFiles() {
   return del([
     // match everything inside the `css` folder
-    './wp-content/themes/fueled-on-bacon/css/**/*',
+    './wordpress/wp-content/themes/fueled-on-bacon/css/**/*',
     // match everything inside the `js/dist` folder
-    './wp-content/themes/fueled-on-bacon/js/dist/**/*'
+    './wordpress/wp-content/themes/fueled-on-bacon/js/dist/**/*'
   ]);
 }
 //-------------//
 // watch files //
 //-------------//
 function watchFiles() {
-  gulp.watch(SASS_SOURCE_FOLDER, gulp.series(compileSass, browserSyncReload));
-  gulp.watch(TS_SRC_FOLDER, gulp.series(runWebpack, browserSyncReload));
-  gulp.watch(JS_SRC_FOLDER, gulp.series(compileJS, runWebpack, browserSyncReload));
+  gulp.watch(SASS_SOURCE_FOLDER, gulp.series(runWebpack));
+  gulp.watch(TS_SRC_FOLDER, gulp.series(runWebpack));
+  gulp.watch(JS_SRC_FOLDER, gulp.series(runWebpack));
 }
 
 //----------------------//
@@ -125,18 +125,18 @@ function watchFiles() {
 //----------------------//
 const build = gulp.series(
   getDependencies,
-  compileSass,
-  compileJS,
+  // compileSass,
+  // compileJS,
   runWebpack
 );
 const start = gulp.series(
   gulp.series(
     getDependencies,
-    compileSass,
-    compileJS,
+    // compileSass,
+    // compileJS,
     runWebpack
   ),
-  gulp.parallel(watchFiles, browserSync)
+  gulp.parallel(watchFiles)
 );
 const pr = gulp.series(deleteCompiledFiles);
 //--------------------------//
