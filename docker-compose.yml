@@ -14,8 +14,8 @@ services:
             - 8080:80
             - 443:443
         volumes:
-            - ./wordpress/wp-content/plugins:/app/wp-content/plugins
-            - ./wordpress:/data
+            - ./wordpress:/app
+            - ./sql:/data
             - ./scripts:/docker-entrypoint-initwp.d
         environment:
             DB_NAME: wordpress

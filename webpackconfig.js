@@ -1,17 +1,17 @@
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = {
   mode: "production",
   entry: {
-    bundle: __dirname + "/wordpress/wp-content/themes/fueled-on-bacon/src/bundle_this.ts",
-    main: __dirname + "/wordpress/wp-content/themes/fueled-on-bacon/src/scss/main.scss"
+    custom: __dirname + "/wordpress/wp-content/themes/storefront-child-theme-master/assets/sass/style.scss"
   },
   output: {
-    path: __dirname + "/wordpress/wp-content/themes/fueled-on-bacon/js",
-    filename: "[name].js",
+    path: __dirname + "/wordpress/wp-content/themes/storefront-child-theme-master",
+    filename: "./js/[name].js",
     library: '[name]',
     libraryTarget: 'umd'
   },
   resolve: {
-      extensions: [".ts", ".tsx", ".js", ".scss"]
+      extensions: [".ts", ".tsx", ".js", ".scss", ".woff", ".woff2", ".eot", ".ttf"]
   },
   devtool: 'source-map',
   externals: [/(jQuery)/],
@@ -29,14 +29,16 @@ module.exports = {
       {
         test: /\.scss$/,
         use: [
+          'style-loader',
           {
-						loader: 'file-loader',
-						options: {
-							name: 'css/[name].css',
-						}
-					},
-          'style-loader', 
-          'css-loader', 
+            loader: MiniCssExtractPlugin.loader
+          },
+          {
+            loader: 'css-loader', 
+            options: {
+              sourceMap: true
+            },
+          },
           'resolve-url-loader', 
           {
             loader: 'sass-loader',
@@ -46,7 +48,27 @@ module.exports = {
             },
           }, 
         ]
+      },
+      {
+        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: 'assets/fonts/'
+            }
+          }
+        ]
       }
     ]
   },
+  plugins: [
+    new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // both options are optional
+      filename: '[name].css',
+      chunkFilename: '[id].css',
+    }),
+  ],
 }

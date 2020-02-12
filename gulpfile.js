@@ -4,25 +4,19 @@
 const autoprefixer = require('autoprefixer');
 const babel = require('gulp-babel');
 const browsersync = require('browser-sync');
-const cssnano = require('gulp-cssnano');
 const del = require('del');
 const gulp = require('gulp');
-const groupmq = require('gulp-group-css-media-queries');
 const jshint = require('gulp-jshint');
-const postcss = require('gulp-postcss');
-// const sass = require('gulp-sass');
-//sass.compiler = require('sass'); // define sass compiler
 const srcmaps = require('gulp-sourcemaps');
 const uglify = require('gulp-uglify');
 const { runWebpack } = require('./webpack-script.js');
 //----------------//
 // file locations //
 //----------------//
-const CSS_DEST_FOLDER = './wp-content/themes/fueled-on-bacon/css';
-const SASS_SOURCE_FOLDER = './wp-content/themes/fueled-on-bacon/src/scss/**/*.scss';
-const JS_DEST_FOLDER = './wp-content/themes/fueled-on-bacon/js';
-const JS_SRC_FOLDER = './wp-content/themes/fueled-on-bacon/src/js/*.js';
-const TS_SRC_FOLDER = './wp-content/themes/fueled-on-bacon/src/ts/**/*.ts';
+const SASS_SOURCE_FOLDER = './wordpress/wp-content/themes/storefront-child-theme-master/assets/sass/**/*.scss';
+const JS_DEST_FOLDER = './wordpress/wp-content/themes/storefront-child-theme-master/js';
+const JS_SRC_FOLDER = './wordpress/wp-content/themes/storefront-child-theme-master/src/js/*.js';
+const TS_SRC_FOLDER = './wordpress/wp-content/themes/storefront-child-theme-master/src/ts/**/*.ts';
 //--------------------//
 // transpiler configs //
 //--------------------//
@@ -53,22 +47,7 @@ function browserSyncReload(done) {
   browsersync.reload();
   done();
 }
-//---------------------//
-// process .scss files //
-//---------------------//
-  // function compileSass() {
-  //   return gulp
-  //     .src(SASS_SOURCE_FOLDER) // source folder
-  //     .pipe(srcmaps.init()) // source map before checkpoint
-  //     .pipe(sass())
-  //     .on('error', sass.logError)
-  //     .pipe(postcss([autoprefixer({ cascade: false })]))
-  //     .pipe(groupmq()) // group media queries!
-  //     .pipe(cssnano()) // minify css
-  //     .pipe(srcmaps.write('.')) // source map after checkpoint
-  //     .pipe(gulp.dest(CSS_DEST_FOLDER)) // css destination folder
-  //     .pipe(browsersync.stream()); // stream to browsersync
-  // }
+
 //-------------------//
 // process .js files //
 //-------------------//
@@ -91,7 +70,7 @@ function compileJS() {
 function getHamburgers() {
   return gulp
     .src('./node_modules/hamburgers/_sass/hamburgers/**/*')
-    .pipe(gulp.dest('./wordpress/wp-content/themes/fueled-on-bacon/lib/hamburgers'));
+    .pipe(gulp.dest('./wordpress/wp-content/themes/storefront-child-theme-master/lib/hamburgers'));
 }
 // slick carousel
 // adding more? include in getDependencies below also!
@@ -106,9 +85,9 @@ const getDependencies = gulp.parallel(
 function deleteCompiledFiles() {
   return del([
     // match everything inside the `css` folder
-    './wordpress/wp-content/themes/fueled-on-bacon/css/**/*',
+    './wordpress/wp-content/themes/storefront-child-theme-master/style.css',
     // match everything inside the `js/dist` folder
-    './wordpress/wp-content/themes/fueled-on-bacon/js/dist/**/*'
+    './wordpress/wp-content/themes/storefront-child-theme-master/js/**/*'
   ]);
 }
 //-------------//
@@ -116,7 +95,6 @@ function deleteCompiledFiles() {
 //-------------//
 function watchFiles() {
   gulp.watch(SASS_SOURCE_FOLDER, gulp.series(runWebpack));
-  gulp.watch(TS_SRC_FOLDER, gulp.series(runWebpack));
   gulp.watch(JS_SRC_FOLDER, gulp.series(runWebpack));
 }
 
@@ -125,15 +103,11 @@ function watchFiles() {
 //----------------------//
 const build = gulp.series(
   getDependencies,
-  // compileSass,
-  // compileJS,
   runWebpack
 );
 const start = gulp.series(
   gulp.series(
     getDependencies,
-    // compileSass,
-    // compileJS,
     runWebpack
   ),
   gulp.parallel(watchFiles)
