@@ -26,3 +26,4 @@ sql/*
 *.njsproj
 *.sln
 *.todo
+webackconfig.js
