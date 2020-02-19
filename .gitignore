@@ -15,6 +15,9 @@ yarn-error.log*
 # Wordpress
 wordpress/*
 
+# SQL
+sql/*
+
 # Editor directories and files
 .idea
 .vscode
