@@ -1,14 +1,13 @@
 {
   "compilerOptions": {
-    "outDir": "./dist/",
+    "outDir": "./js/",
     "noImplicitAny": true,
     "module": "es6",
     "target": "es5",
     "allowJs": true
   },
   "include":[
-    "./wordpress/wp-content/themes/fueled-on-bacon/src/ts",
-    "./wordpress/wp-content/themes/fueled-on-bacon/src/bundle_this.ts"
+    "./wordpress/wp-content/themes/fueled-on-bacon/src"
   ],
   "exclude": [
     "node_modules",

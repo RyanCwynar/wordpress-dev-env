@@ -21,7 +21,7 @@ services:
             DB_NAME: wordpress
             DB_PASS: root
     db:
-        image: mariadb:10 # or mysql:5.7
+        image: mysql:5.7
         volumes:
             - ./wordpress/wp-database:/var/lib/mysql
         environment:

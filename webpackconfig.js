@@ -1,11 +1,15 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const THEMES = "/wordpress/wp-content/themes"
+const THEME_NAME = "/fueled-on-bacon"
 module.exports = {
+  
   mode: "production",
   entry: {
-    custom: __dirname + "/wordpress/wp-content/themes/storefront-child-theme-master/assets/sass/style.scss"
+    bundle: __dirname + THEMES + THEME_NAME + "/src/index.ts",
+    main: __dirname + THEMES + THEME_NAME + "/scss/main.scss"
   },
   output: {
-    path: __dirname + "/wordpress/wp-content/themes/storefront-child-theme-master",
+    path: __dirname + THEMES + THEME_NAME,
     filename: "./js/[name].js",
     library: '[name]',
     libraryTarget: 'umd'
@@ -67,7 +71,7 @@ module.exports = {
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
-      filename: '[name].css',
+      filename: 'css/[name].css',
       chunkFilename: '[id].css',
     }),
   ],
