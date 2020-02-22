@@ -1,11 +1,33 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const yaml = require("js-yaml")
+const fs = require("fs")
+
+let data = {
+  THEME_NAME: 'twentytwenty'
+}
+
+try {
+    let fileContents = fs.readFileSync('./config.yaml', 'utf8');
+    data = yaml.safeLoad(fileContents);
+
+    console.log(data);
+} catch (e) {
+    console.log(e);
+}
+
+const SRC = "/wordpress/src"
+const THEMES = "/wordpress/wp-content/themes"
+const THEME_NAME = data.THEME_NAME
+
 module.exports = {
+  
   mode: "production",
   entry: {
-    custom: __dirname + "/wordpress/wp-content/themes/storefront-child-theme-master/assets/sass/style.scss"
+    bundle: __dirname + SRC + "js/main.js",
+    main: __dirname + SRC + "/scss/main.scss"
   },
   output: {
-    path: __dirname + "/wordpress/wp-content/themes/storefront-child-theme-master",
+    path: __dirname + THEMES + THEME_NAME,
     filename: "./js/[name].js",
     library: '[name]',
     libraryTarget: 'umd'
@@ -67,7 +89,7 @@ module.exports = {
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
-      filename: '[name].css',
+      filename: 'css/[name].css',
       chunkFilename: '[id].css',
     }),
   ],

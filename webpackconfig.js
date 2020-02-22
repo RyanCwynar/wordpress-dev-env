@@ -1,12 +1,30 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const yaml = require("js-yaml")
+const fs = require("fs")
+
+let data = {
+  THEME_NAME: 'twentytwenty'
+}
+
+try {
+    let fileContents = fs.readFileSync('./config.yaml', 'utf8');
+    data = yaml.safeLoad(fileContents);
+
+    console.log(data);
+} catch (e) {
+    console.log(e);
+}
+
+const SRC = "/wordpress/src"
 const THEMES = "/wordpress/wp-content/themes"
-const THEME_NAME = "/fueled-on-bacon"
+const THEME_NAME = data.THEME_NAME
+
 module.exports = {
   
   mode: "production",
   entry: {
-    bundle: __dirname + THEMES + THEME_NAME + "/src/index.ts",
-    main: __dirname + THEMES + THEME_NAME + "/scss/main.scss"
+    bundle: __dirname + SRC + "js/main.js",
+    main: __dirname + SRC + "/scss/main.scss"
   },
   output: {
     path: __dirname + THEMES + THEME_NAME,
