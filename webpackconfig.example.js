@@ -1,6 +1,7 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const yaml = require("js-yaml")
 const fs = require("fs")
+const path = require("path")
 
 let data = {
   THEME_NAME: 'twentytwenty'
@@ -23,11 +24,11 @@ module.exports = {
   
   mode: "production",
   entry: {
-    bundle: __dirname + SRC + "/js/index.js",
-    custom: __dirname + SRC + "/scss/index.scss"
+    bundle: path.resolve(__dirname, SRC, "/js/index.js"),
+    custom: path.resolve(__dirname, SRC, "/scss/index.scss")
   },
   output: {
-    path: __dirname + THEMES + THEME_NAME,
+    path: path.resolve(__dirname, THEMES, THEME_NAME),
     filename: "./js/[name].js",
     library: '[name]',
     libraryTarget: 'umd'
