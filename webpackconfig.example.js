@@ -24,11 +24,11 @@ module.exports = {
   
   mode: "production",
   entry: {
-    bundle: path.resolve(__dirname, SRC, "/js/index.js"),
-    custom: path.resolve(__dirname, SRC, "/scss/index.scss")
+    bundle: path.join(__dirname, SRC, "/js/index.js"),
+    custom: path.join(__dirname, SRC, "/scss/index.scss")
   },
   output: {
-    path: path.resolve(__dirname, THEMES, THEME_NAME),
+    path: path.join(__dirname, THEMES, THEME_NAME),
     filename: "./js/[name].js",
     library: '[name]',
     libraryTarget: 'umd'
@@ -90,7 +90,7 @@ module.exports = {
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
-      filename: 'css/[name].css',
+      filename: '[name].css',
       chunkFilename: '[id].css',
     }),
   ],
