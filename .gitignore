@@ -27,3 +27,4 @@ sql/*
 *.sln
 *.todo
 webpackconfig.js
+config.yaml
