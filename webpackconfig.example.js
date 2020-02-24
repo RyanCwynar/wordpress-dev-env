@@ -23,8 +23,8 @@ module.exports = {
   
   mode: "production",
   entry: {
-    bundle: __dirname + SRC + "js/main.js",
-    main: __dirname + SRC + "/scss/main.scss"
+    bundle: __dirname + SRC + "/js/index.js",
+    custom: __dirname + SRC + "/scss/index.scss"
   },
   output: {
     path: __dirname + THEMES + THEME_NAME,
