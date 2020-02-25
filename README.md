@@ -1,10 +1,13 @@
-# FoB WordPress Development Environment 
+# WordPress Development Environment 
 This a reusable configuration for WordPress projects
 
 ## Get Started 
 1. Add wordpress theme files, plugins, media in the wordpress folder
 2. `npm install`
 3. `docker-compose up`
+
+## Synchronize with WP Engine
+If you have SSH access configured on your WP Engine account, you can use the `sync-wpengine.sh` script to copy your media files and plugins from a WP Engine environment to your local environment.
 
 ## Notes
 Uses webpack to compile JavaScript and Sass
