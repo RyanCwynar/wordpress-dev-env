@@ -28,3 +28,5 @@ sql/*
 *.todo
 webpackconfig.js
 config.yaml
+wp-database
+*.sql
